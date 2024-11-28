@@ -1,0 +1,54 @@
+body {
+    background-color: #1a1a1a; 
+    color: #fff; 
+}
+.navbar {
+    background-color: transparent !important; 
+}
+.navbar-brand {
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 1.5rem;
+    color: #fff;
+}
+.navbar-brand:hover {
+    color: #00ffcc; 
+}
+.nav-item a {
+    color: #fff;
+}
+.nav-item a:hover {
+    color: #ff33cc; 
+}
+.search-bar {
+    border-radius: 20px;
+    border: 2px solid #00ffcc;
+}
+.btn-search {
+    background-color: #ff33cc;
+    color: #fff;
+}
+.btn-search:hover {
+    background-color: #00ff99;
+    color: #000;
+}
+.icon-link {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-left: 15px;
+}
+.icon-link:hover {
+    color: #ff33cc;
+}
+@media (max-width: 768px) {
+    .search-bar {
+        width: 100%; 
+    }
+    .navbar .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .icon-link {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
