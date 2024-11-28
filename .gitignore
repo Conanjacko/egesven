@@ -1,0 +1,42 @@
+# Ignorar bytecode y caché de Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignorar ambientes virtuales
+ENV/
+venv/
+
+# Ignorar bases de datos locales
+db.sqlite3
+*.sqlite3
+
+# Archivos de configuración sensibles
+.env
+
+# Archivos de logs y temporales
+*.log
+*.bak
+*.tmp
+
+# Archivos generados por collectstatic (estáticos de Django)
+staticfiles/
+
+# Archivos multimedia (subidos por usuarios durante desarrollo)
+media/
+
+# Configuraciones específicas del IDE o herramientas de desarrollo
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de dependencias de frontend (si usas npm/yarn para el frontend)
+node_modules/
+package-lock.json
+yarn.lock
