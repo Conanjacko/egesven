@@ -9,18 +9,19 @@
     <title>eGESVEN - Inicio</title>
     <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-transparent">
         <div class="container">
             <a class="navbar-brand" href="{% url 'inicio' %}">
-                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 50px;">
+                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 130px;">
             </a>
             <form class="form-inline mx-auto">
                 <input class="form-control" type="search" placeholder="Buscar productos :D" aria-label="Search">
             </form>
             <div>
+                <a href="/productos" class="btn btn-link text-white">Productos</a>
                 <a href="/login" class="btn btn-link text-white">Inicio sesión</a>
                 <a href="/carrito" class="btn btn-link text-white">
                     <img src="{% static 'img/carrito.png' %}" alt="Carro de compras" style="max-height: 30px;">
@@ -29,7 +30,23 @@
         </div>
     </nav>
 
-    <!-- Aquí iría el contenido principal de la página -->
+    <div class="container mt-5">
+        <div class="row">
+            {% for producto in productos %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    <div class="card-body text-center" style="background-color: #f8f9fa; border-top: 1px solid #ddd;">
+                        <h5 class="card-title" style="color: #333; font-weight: bold;">{{ producto.nombre }}</h5>
+                        <p class="card-text" style="color: #555; font-size: 14px;">{{ producto.descripcion }}</p>
+                        <p class="text-primary font-weight-bold" style="font-size: 16px;">${{ producto.precio }}</p>
+                        <button class="btn btn-success">AGREGAR AL CARRO</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

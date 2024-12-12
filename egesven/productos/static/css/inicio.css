@@ -1,6 +1,6 @@
 body {
-    background-color: #1a1a1a; 
-    color: #fff; 
+    background-color: #1a1a1a !important;
+    color: #fff !important;
 }
 .navbar {
     background-color: transparent !important; 
@@ -51,4 +51,5 @@ body {
         margin-left: 0;
         margin-top: 10px;
     }
+
 }
