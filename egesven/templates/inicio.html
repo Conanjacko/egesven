@@ -12,17 +12,18 @@
     
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-transparent">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff">
         <div class="container">
             <a class="navbar-brand" href="{% url 'inicio' %}">
-                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 130px;">
+                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 200px;">
             </a>
             <form class="form-inline mx-auto">
                 <input class="form-control" type="search" placeholder="Buscar productos :D" aria-label="Search">
             </form>
             <div>
-                <a href="/productos" class="btn btn-link text-white">Productos</a>
-                <a href="/login" class="btn btn-link text-white">Inicio sesión</a>
+                <a href="/productos" class="btn btn-link">Productos</a>
+                <a href="{% url 'usuarios:login' %}" class="btn btn-link">Inicio sesión</a>
+                <a href="{% url 'usuarios:registro' %}" class="btn btn-link">Regístrate</a>
                 <a href="/carrito" class="btn btn-link text-white">
                     <img src="{% static 'img/carrito.png' %}" alt="Carro de compras" style="max-height: 30px;">
                 </a>

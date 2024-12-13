@@ -1,0 +1,80 @@
+/* General */
+body {
+    font-family: 'Press Start 2P', cursive; /* Fuente gamer */
+    background: linear-gradient(45deg, #1a1a1a, #0c0c0c);
+    color: #f8f8f8;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Contenedor */
+.container {
+    background: #111;
+    border: 2px solid #03e9f4;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(3, 233, 244, 0.5);
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Títulos */
+h1 {
+    color: #03e9f4;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #03e9f4;
+}
+
+/* Formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input {
+    background: #222;
+    border: 2px solid #03e9f4;
+    color: #f8f8f8;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+}
+
+form input:focus {
+    border-color: #ff105e;
+    box-shadow: 0 0 10px #ff105e;
+}
+
+/* Botones */
+button {
+    background: #03e9f4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #111;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+button:hover {
+    background: #ff105e;
+    color: #fff;
+}
+
+/* Enlaces */
+a {
+    color: #03e9f4;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #ff105e;
+}
