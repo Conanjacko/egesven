@@ -26,6 +26,6 @@ def session_required(view_func):
             except (Session.DoesNotExist, User.DoesNotExist):
                 pass
 
-        return redirect("landing")
+        return redirect("inicio")
 
     return _wrapped_view

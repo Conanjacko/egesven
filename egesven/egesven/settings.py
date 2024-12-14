@@ -29,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LANGUAGE_CODE = "es-cl"
+USE_L10N = True
+
+DATE_FORMAT = "d/m/Y"
+TIME_FORMAT = "H:i:s"
 
 # Application definition
 

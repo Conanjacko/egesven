@@ -19,11 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from productos.views import landing
+from productos.views import carrito, landing
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", landing, name="inicio"),
+    path("carrito/", carrito, name="carrito"),
     path("productos/", include("productos.urls")),
     path("usuarios/", include("users.urls")),
 ]

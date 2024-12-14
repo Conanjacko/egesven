@@ -1,0 +1,282 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eGESVEN - Inicio</title>
+    <script type="module" src="../static/js/cart.js"></script>
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<style>
+    .cart {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        right: 8px;
+        top: 1px;
+        border-radius: 100%;
+        background-color: skyblue;
+        outline: 1px solid white;
+    }
+
+    .cart::after {
+        content: attr(data-count);
+        color: black;
+        font-size: 0.7rem;
+        position: absolute;
+        transform: translateX(-50%) translateY(-5%);
+        /* display: inline-block; */
+    }
+
+    .spinner {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        width: 395px;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #23406f;
+        background-clip: border-box;
+        border: 1px solid #23406f;
+        border-radius: 7px;
+    }
+
+    .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+</style>
+
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-transparent">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'inicio' %}">
+                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 130px;">
+            </a>
+
+            <form class="form-inline mx-auto">
+                <input class="form-control" type="search" placeholder="Buscar productos :D" aria-label="Buscar">
+            </form>
+            <div class="bg-primary p-2">
+
+                <a href="/productos" class="btn btn-link text-white">Productos</a>
+
+                {% if user.is_authenticated %}
+                <span class="text-muted">Hola, {{ user.username }}</span>
+                <a href="{% url 'usuarios:logout' %}" class="btn btn-primary">Cerrar sesión</a>
+                {% else %}
+                <a href="{% url 'usuarios:login' %}" class="btn btn-link text-white">Iniciar sesión</a>
+                <a href="{% url 'usuarios:registro' %}" class="btn btn-link text-white">Registrarse</a>
+                {% endif %}
+
+                <a style="position: relative;" href="/carrito" class="btn btn-link text-white" id="cart-link">
+                    <img src="{% static 'img/carrito.png' %}" alt="Carro de compras" style="max-height: 30px;">
+                    <span class="cart" data-count="0"></span>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div id="post-purchase" style="display: none;" class="alert alert-success" role="alert">
+
+        </div>
+        <h2 class="text-center compra">Resumen del Carrito</h2>
+
+        <table class="table table-striped compra">
+            <thead class="text-light ">
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody class="text-light">
+                {% for item in productos %}
+                <tr>
+                    <td>{{ item.producto.nombre }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>{{ item.total_producto }}</td>
+                    <td>{{ item.total_producto }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="compra" style="display: flex;width: 100%; justify-content: end;">
+            <div class="alert alert-info" style="max-width: 20rem;" role="alert">
+                Total {{ total }}
+            </div>
+        </div>
+
+        {% if is_authenticated %}
+        <div style="display: flex; flex-direction: column;" class="container mt-5 ">
+            <h2 class="text-center">Datos para Envío</h2>
+            <div class="alert alert-warning" style="max-width: 20rem;margin-top: 4rem;margin-bottom: 4rem;"
+                role="alert">
+                <p> Nombre: {{user.username}}</p>
+                <p>
+                    Correo: {{user.email}}
+                </p>
+            </div>
+            <form class="needs-validation" id="paymentForm" novalidate=""
+                style="max-width: 45rem; margin-bottom: 5rem;">
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion"
+                        placeholder="Ingresa tu dirección" value="">
+                </div>
+                <div class="form-group ">
+                    <label for="comuna">Comuna</label>
+                    <select class="form-control" id="comuna" name="comuna">
+                        <option value="Santiago">Santiago</option>
+                        <option value="Viña del Mar">Viña del Mar</option>
+                        <option value="Valparaíso">Valparaíso</option>
+                        <option value="Concepción">Concepción</option>
+                        <option value="Antofagasta">Antofagasta</option>
+                        <option value="Temuco">Temuco</option>
+                        <option value="La Serena">La Serena</option>
+                        <option value="Rancagua">Rancagua</option>
+                        <option value="Talca">Talca</option>
+                        <option value="Punta Arenas">Punta Arenas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ciudad">Ciudad</label>
+                    <select class="form-control" id="ciudad" name="ciudad">
+                        <option value="Santiago">Santiago</option>
+                        <option value="Viña del Mar">Viña del Mar</option>
+                        <option value="Valparaíso">Valparaíso</option>
+                        <option value="Concepción">Concepción</option>
+                        <option value="Antofagasta">Antofagasta</option>
+                        <option value="Temuco">Temuco</option>
+                        <option value="La Serena">La Serena</option>
+                        <option value="Rancagua">Rancagua</option>
+                        <option value="Talca">Talca</option>
+                        <option value="Punta Arenas">Punta Arenas</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo_postal">Código Postal</label>
+                    <input type="text" class="form-control" id="codigo_postal" name="codigo_postal"
+                        placeholder="Ingresa tu código postal" value="">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono"
+                        placeholder="Ingresa tu teléfono" value="">
+                </div>
+                <h4>Pago</h4>
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked=""
+                            required="">
+                        <label class="form-check-label" for="credit">Tarjeta Credito</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="debit">Tarjeta Debito</label>
+                    </div>
+
+                </div>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label for="cc-name" class="form-label">Nombre de la tarjeta</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                        <small class="text-muted">Nombre Completo como aparece en la tarjeta</small>
+                        <div class="invalid-feedback">
+                            Nombre tarjeta de credito
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="cc-number" class="form-label">Numero tarjeta credito</label>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Es Requerido el numero
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Expiracion</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Fecha expiracion
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Codigo es requerido
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Pagar</button>
+
+            </form>
+
+        </div>
+
+        {% else %}
+        <div class="alert alert-warning" style="display: flex;justify-content: space-between;align-items: center;"
+            role="alert">
+            Crea una cuenta para continuar...
+            <a href="{% url 'usuarios:registro' %}" class="btn btn-primary mt-2">Crear cuenta</a>
+        </div>
+
+        {% endif %}
+    </div>
+    <div class="loader-container" id="spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html
