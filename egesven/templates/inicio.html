@@ -9,21 +9,30 @@
     <title>eGESVEN - Inicio</title>
     <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff">
+    <nav class="navbar navbar-expand-lg navbar-transparent">
         <div class="container">
             <a class="navbar-brand" href="{% url 'inicio' %}">
-                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 200px;">
+                <img src="{% static 'img/logo.png' %}" alt="eGESVEN Logo" class="img-fluid" style="max-height: 130px;">
             </a>
             <form class="form-inline mx-auto">
                 <input class="form-control" type="search" placeholder="Buscar productos :D" aria-label="Search">
             </form>
             <div>
-                <a href="/productos" class="btn btn-link">Productos</a>
-                <a href="{% url 'usuarios:login' %}" class="btn btn-link">Inicio sesión</a>
-                <a href="{% url 'usuarios:registro' %}" class="btn btn-link">Regístrate</a>
+                <a href="/productos" class="btn btn-link text-white">Productos</a>
+
+                {% if user.is_authenticated %}
+
+                <span class="text-secondary">Hola, {{ user.username }}</span>
+                <a href="{% url 'usuarios:logout' %}" class="btn btn-primary ">Cerrar sesión</a>
+                {% else %}
+
+                <a href="/login" class="btn btn-link text-white">Iniciar sesión</a>
+                <a href="/register" class="btn btn-link text-white">Registrarse</a>
+                {% endif %}
+
                 <a href="/carrito" class="btn btn-link text-white">
                     <img src="{% static 'img/carrito.png' %}" alt="Carro de compras" style="max-height: 30px;">
                 </a>

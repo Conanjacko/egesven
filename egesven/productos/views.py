@@ -1,14 +1,16 @@
-from django.shortcuts import render,redirect
-from .models import Producto
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
-from django.contrib import messages
+from django.shortcuts import render
+from util.auth import session_required
 
+from .models import Producto
+
+
+@session_required
 def landing(request):
     productos = Producto.objects.all()
-    return render(request, 'inicio.html', {'productos': productos})
+
+    return render(request, "inicio.html", {"productos": productos})
+
 
 def productos(request):
-    productos = Producto.objects.all()  
-    return render(request, 'productos.html', {'productos': productos})
-
+    productos = Producto.objects.all()
+    return render(request, "productos.html", {"productos": productos})

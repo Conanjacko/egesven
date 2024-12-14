@@ -7,7 +7,9 @@ class Producto(models.Model):
     precio = models.DecimalField("Precio", max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField("Stock disponible", default=0)
     fecha_creacion = models.DateTimeField("Fecha de creación", auto_now_add=True)
-    imagen = models.ImageField("Imagen del producto", upload_to="productos/", null=True, blank=True)
+    imagen = models.ImageField(
+        "Imagen del producto", upload_to="productos/", null=True, blank=True
+    )
 
     class Meta:
         verbose_name = "Producto"
